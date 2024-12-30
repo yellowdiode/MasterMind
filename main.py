@@ -53,30 +53,14 @@ def append_guesses(guesses, guess, idx, num_colors):
 
 
 guesses = []
-#creation = [0, 0, 0, 0]
-#def generator(guesses, creation):
-#    for i in range (1, 7):
-#        creation[0] = i
-#        for e in range(1, 7):
-#            creation[1] = e
-#            for a in range(1, 7):
-#                creation[2] = a
-#                for o in range(1, 7):
-#                    creation[3] = o
-#                    guesses.append(list(creation))
-#    return guesses
-
-
-#def test(secret, guess):
-#    print("secret: ", secret, " guess: ", guess)
- #   Score(secret, guess)
-  #  print()
 
 prev_guess = []
 prev_score = []
 num_guesses = 0
+guess_count = 0
 
 if __name__ == '__main__':
+
     num_colors = int(input("how many colors are there: "))
     num_pegs = int(input("how many spots for pegs are there: "))
     print()
@@ -92,6 +76,7 @@ if __name__ == '__main__':
         num_whites = int(input("How many whites are there: "))
         num_reds = int(input("How many reds are there: "))
         prev_score = [num_whites, "w", num_reds, "r"]
+        guess_count += 1
         print()
 
         for i in range(len(guesses)-1, -1, -1):
@@ -103,23 +88,9 @@ if __name__ == '__main__':
     if len(guesses) == 0:
         print("Either you messed up scoring or you are trying to trick me... You can't.")
     else:
-        print(guesses[0], "Haha, I won.")
+        print(guesses[0], "Haha, I won in", guess_count, "tries")
 
 
 
 
 
-
-    #append_guesses(guesses, [None] * 4, 4 - 1, 6)
-    #print(guesses)
-    #print(generator(guesses, creation))
-    #test(["a", "x", "x", "x"], ["a", "y", "y", "y"])
-    #test(["a", "a", "x", "a"], ["a", "b", "c", "d"])
-    #test(["a", "a", "x", "a"], ["b", "a", "a", "d"])
-    #test(["a", "a", "c", "d"], ["a", "a", "a", "a"])
-    #test(["a", "b", "c", "d"], ["a", "b", "c", "d"])
-    #test(["b", "a", "c", "d"], ["a", "b", "c", "d"])
-    #test(["a", "b", "c", "d"], ["a", "a", "a", "a"])
-    #test(["a", "b", "c", "d"], ["x", "a", "a", "a"])
-    #test(["a", "a", "c", "c"], ["a", "a", "a", "c"])
-    #test(["a", "c", "c", "a"], ["a", "c", "a", "c"])
