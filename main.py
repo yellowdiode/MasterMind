@@ -5,7 +5,7 @@ guess = ["g", "g", "g", "g"]
 
 
 def Score(secret, guess):
-    score = [0, "w", 0, "r"]
+    score = [0, 0]
     secret_copy = list(secret)
     bulbs = len(guess)
     for bulb in range (0, bulbs):
@@ -21,7 +21,7 @@ def Score(secret, guess):
                                 score[0] += 1
                                 secret_copy[e] = "jdsfk"
                     if guess[bulb] == secret_copy[i]:
-                        score[2] += 1
+                        score[1] += 1
                         secret_copy[i] = "dshfsj"
                 break
     return score
@@ -52,6 +52,40 @@ def append_guesses(guesses, guess, idx, num_colors):
 # append_guesses(guesses, [None] * num_pegs, num_pegs - 1, num_colors)
 
 
+def worst_case(guesses, guess):
+    poss_scores = []
+
+    for a_guess in guesses:
+        found = None
+        a_score = Score(a_guess, guess)
+        for elem in poss_scores:
+            if elem[0] == a_score[0] and elem[1] == a_score[1]:
+                elem[2] += 1
+                found = True
+                break
+        if not found:
+            poss_scores.append([a_score[0], a_score[1], 1])
+
+    best_pos_scores = -1
+    for i in range(0, len(poss_scores)):
+        if poss_scores[i][2] > best_pos_scores:
+            best_pos_scores = poss_scores[i][2]
+    return best_pos_scores
+
+
+def real_guess(guesses):
+    next_guess = None
+    best_worst = len(guesses)+1
+    for a_guess in guesses:
+        curr_worst = worst_case(guesses, a_guess)
+        if curr_worst < best_worst:
+            next_guess = [a_guess]
+            best_worst = curr_worst
+        elif curr_worst == best_worst:
+            next_guess.append(a_guess)
+    return random.choice(next_guess)
+
+
 guesses = []
 
 prev_guess = []
@@ -71,11 +105,11 @@ if __name__ == '__main__':
     append_guesses(guesses, [None] * num_pegs, num_pegs - 1, num_colors)
 
     while len(guesses) > 1:
-        prev_guess = guesses[random.randint(0, len(guesses) - 1)]
+        prev_guess = real_guess(guesses)
         print(prev_guess)
         num_whites = int(input("How many whites are there: "))
         num_reds = int(input("How many reds are there: "))
-        prev_score = [num_whites, "w", num_reds, "r"]
+        prev_score = [num_whites, num_reds,]
         guess_count += 1
         print()
 
